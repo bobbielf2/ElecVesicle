@@ -6,6 +6,7 @@ function Main(RunFile)
 % Code written by Gary Marple (Stokes part) and Bowei Wu (Electric part).
 
 savedata = 0; % save data?
+usePlot = 1; % plot simulation?
 
 % Preliminary
 % -------------------------------------------------------------------------
@@ -246,25 +247,29 @@ for k=1:T
     
     if k>1
         vel_max = 0;
-        figure(1);
         for i = 1:M
-            plot(X{2}{i},Y{2}{i},'r')
-            hold on
-            %plot(X{2}{i}(1),Y{2}{i}(1),'ro','Markersize',10) %track rotation
             Vel = [X{2}{i}-X{1}{i}, Y{2}{i}-Y{1}{i}];
             vel_temp = max(max(abs(Vel)));
-            %quiver(X{2}{i},Y{2}{i}, Vel(:,1), Vel(:,2)); %plot velocity
             if vel_max<vel_temp, vel_max = vel_temp; end
+            if usePlot
+              plot(X{2}{i},Y{2}{i},'r')
+              hold on
+              %plot(X{2}{i}(1),Y{2}{i}(1),'ro','Markersize',10) %track rotation
+              %quiver(X{2}{i},Y{2}{i}, Vel(:,1), Vel(:,2)); %plot velocity
+            end
         end
+        if usePlot
+          axis([-2,2, -2,2]/.6)
+          axis equal
+          title(num2str(k))
+          %pbaspect([2,1,1])
+          drawnow
+          %F(k) = getframe(h);
+          hold off
+        end
+        
         disp('max vel: ')
         disp(vel_temp)
-        axis([-2,2, -2,2]/.6)
-        axis equal
-        title(num2str(k))
-        %pbaspect([2,1,1])
-        drawnow
-        %F(k) = getframe(h);
-        hold off
         if vel_max>10
             disp('Vel too big!!')
             break
