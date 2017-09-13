@@ -1,4 +1,9 @@
 function Main(RunFile)
+% This routine simulates vesicle electro-rheology in free space.
+% Each time step the code solves a coupled system of Stokes & Laplace BVPs.
+% Reference: B. Wu & S. Veerapaneni, Pairwise hydrodynamic interactions of 
+% vesicles in applied electric fields, in preparation.
+% Code written by Gary Marple (Stokes part) and Bowei Wu (Electric part).
 
 savedata = 0; % save data?
 
